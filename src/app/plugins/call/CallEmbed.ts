@@ -25,6 +25,7 @@ import {
 } from './types';
 import { CallControl } from './CallControl';
 import { CallControlState } from './CallControlState';
+import { installMicWrapper } from './micWrapper';
 
 export class CallEmbed {
   private mx: MatrixClient;
@@ -175,6 +176,7 @@ export class CallEmbed {
     this.control.startObserving();
     iframe.onload = () => {
       this.control.startObserving();
+      installMicWrapper(iframe);
     };
 
     let initialMediaEvent = true;
