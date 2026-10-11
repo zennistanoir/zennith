@@ -18,6 +18,10 @@ const copyFiles = {
       dest: 'public/element-call',
     },
     {
+      src: 'node_modules/@sapphi-red/web-noise-suppressor/dist/*',
+      dest: 'public/noise-suppressor',
+    },
+    {
       src: 'node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
       dest: '',
       rename: 'pdf.worker.min.js',
