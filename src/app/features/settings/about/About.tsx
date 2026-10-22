@@ -38,7 +38,7 @@ export function About({ requestClose }: AboutProps) {
                 <Box shrink="No">
                   <img
                     style={{ width: toRem(60), height: toRem(60) }}
-                    src={CinnySVG}
+                    src="/logo.png"
                     alt="Zennith logo"
                   />
                 </Box>

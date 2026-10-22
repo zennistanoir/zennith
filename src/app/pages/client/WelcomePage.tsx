@@ -14,7 +14,7 @@ export function WelcomePage() {
       >
         <PageHeroSection>
           <PageHero
-            icon={<img width="70" height="70" src={CinnySVG} alt="Zennith Logo" />}
+            icon={<img width="70" height="70" src="/logo.png" alt="Zennith Logo" />}
             title="Welcome to Zennith"
             subTitle={
               <span>
