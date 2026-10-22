@@ -5,7 +5,7 @@ export async function checkForZennithUpdates() {
   try {
     const update = await check({
       headers: {
-        Authorization: 'Bearer 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'
+        Authorization: "Bearer YOUR_GITHUB_TOKEN_HERE"
       }
     });
 
