@@ -1,0 +1,11 @@
+{
+  "version": "0.1.3",
+  "notes": "v0.1.3 release with security patches and dependency updates.",
+  "pub_date": "2026-10-23T00:00:00Z",
+  "platforms": {
+    "windows-x86_64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVUZW1VOUVVd1lGK0dXWEw1Z2hadWJBVExuYVcvSzhqc2FueVVEV245KzJxRERzZ0MveXlQRmg2bGZoeFhxNzZjNTlFNGRmelA5Q3dETGhLQ1ZzQlZvM0FObUx3c1dGcUFJPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzkyNzMzMjk3CWZpbGU6emVubml0aF8wLjEuM194NjQtc2V0dXAuZXhlCXZlcnNpb246MC4xLjMKNXh4STluSjZEWmpDM21IUlZscE44MlRVdnFKOVRhT2E5L04vNEpNZGNsd3ZOM0lUeGtjZURqTW5mN2FJc3BpQXF3UGFBTzZlRGw0UzUvN2I2aTRKQlE9PQo=",
+      "url": "https://github.com/zennistanoir/zennith/releases/download/v0.1.3/zennith_0.1.3_x64-setup.exe"
+    }
+  }
+}

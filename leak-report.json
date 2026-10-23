@@ -1,0 +1,23 @@
+[
+ {
+  "RuleID": "github-fine-grained-pat",
+  "Description": "Found a GitHub Fine-Grained Personal Access Token, risking unauthorized repository access and code manipulation.",
+  "StartLine": 8,
+  "EndLine": 8,
+  "StartColumn": 33,
+  "EndColumn": 125,
+  "Match": "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",
+  "Secret": "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",
+  "File": "src/util/updater.ts",
+  "SymlinkFile": "",
+  "Commit": "827450461b3ad66e181d373a28e74258d74f3a89",
+  "Link": "https://github.com/zennistanoir/cinny/blob/827450461b3ad66e181d373a28e74258d74f3a89/src/util/updater.ts#L8",
+  "Entropy": 5.3908362,
+  "Author": "zennistanoir",
+  "Email": "340815228+zennistanoir@users.noreply.github.com",
+  "Date": "2026-10-22T17:37:32Z",
+  "Message": "Update branding, icons, and bump version",
+  "Tags": [],
+  "Fingerprint": "827450461b3ad66e181d373a28e74258d74f3a89:src/util/updater.ts:github-fine-grained-pat:8"
+ }
+]
