@@ -98,7 +98,7 @@ export function AuthLayout() {
     if (!urlEncodedServer || tryDecodeURIComponent(urlEncodedServer) !== server) {
       navigate(
         generatePath(currentAuthPath(location.pathname), {
-          server: encodeURIComponent(server),
+          server,
         }),
         { replace: true }
       );
@@ -113,7 +113,7 @@ export function AuthLayout() {
         return;
       }
       navigate(
-        generatePath(currentAuthPath(location.pathname), { server: encodeURIComponent(newServer) })
+        generatePath(currentAuthPath(location.pathname), { server: newServer })
       );
     },
     [navigate, location, discoveryState, server, discoverServer]

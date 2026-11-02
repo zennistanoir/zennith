@@ -8,6 +8,12 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '0.1.18',
+    items: [
+      'Hotfix for 0.1.17: opening a space, room or message link no longer fails with "was not legal room ID or room alias".',
+    ],
+  },
+  {
     version: '0.1.17',
     items: [
       'Clearer colours in the Violet and Black themes: purple and red text is easier to read on dark backgrounds, and green buttons are a shade darker so their text stands out.',
