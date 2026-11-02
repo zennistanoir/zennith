@@ -1,6 +1,7 @@
 import React, { ComponentProps, forwardRef } from 'react';
 import { Icon, IconButton, Input, config, Icons } from 'folds';
 import { UseStateProvider } from '../UseStateProvider';
+import { touchTarget } from './PasswordInput.css';
 
 type PasswordInputProps = Omit<ComponentProps<typeof Input>, 'type' | 'size'> & {
   size: '400' | '500';
@@ -27,6 +28,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
                   type="button"
                   variant={visible ? 'Warning' : variant}
                   size="300"
+                  className={size === '500' ? touchTarget : undefined}
                   radii="300"
                 >
                   <Icon

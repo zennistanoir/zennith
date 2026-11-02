@@ -37,6 +37,7 @@ import { PasswordInput } from '../../../components/password-input';
 import { FieldError } from '../FiledError';
 import { getResetPasswordPath } from '../../pathUtils';
 import { stopPropagation } from '../../../utils/keyboard';
+import * as authCss from '../styles.css';
 
 function UsernameHint({ server }: { server: string }) {
   const [anchor, setAnchor] = useState<RectCords>();
@@ -97,6 +98,7 @@ function UsernameHint({ server }: { server: string }) {
         type="button"
         variant="Background"
         size="300"
+        className={authCss.TouchTarget}
         radii="300"
         aria-pressed={!!anchor}
       >
@@ -250,7 +252,9 @@ export function PasswordLoginForm({ defaultUsername, defaultEmail }: PasswordLog
           )}
           <Box grow="Yes" shrink="No" justifyContent="End">
             <Text as="span" size="T200" priority="400" align="Right">
-              <Link to={getResetPasswordPath(server)}>Forget Password?</Link>
+              <Link className={authCss.TouchLink} to={getResetPasswordPath(server)}>
+                Forgot password?
+              </Link>
             </Text>
           </Box>
         </Box>

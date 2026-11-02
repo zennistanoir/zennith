@@ -51,3 +51,18 @@ export const AuthCardContent = style({
 export const AuthFooter = style({
   padding: config.space.S200,
 });
+
+// Minimum 44x44 CSS px hit area (WCAG 2.5.5) without enlarging the glyph inside.
+export const TouchTarget = style({
+  minWidth: toRem(44),
+  minHeight: toRem(44),
+});
+
+export const TouchLink = style({
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  minWidth: toRem(44),
+  minHeight: toRem(44),
+  padding: `0 ${config.space.S100}`,
+});

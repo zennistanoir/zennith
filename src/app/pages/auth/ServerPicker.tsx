@@ -23,6 +23,7 @@ import FocusTrap from 'focus-trap-react';
 
 import { useDebounce } from '../../hooks/useDebounce';
 import { stopPropagation } from '../../utils/keyboard';
+import * as authCss from './styles.css';
 
 export function ServerPicker({
   server,
@@ -132,6 +133,7 @@ export function ServerPicker({
               onClick={handleOpenServerMenu}
               variant={allowCustomServer ? 'Background' : 'Surface'}
               size="300"
+              className={authCss.TouchTarget}
               aria-pressed={!!serverMenuAnchor}
               radii="300"
             >

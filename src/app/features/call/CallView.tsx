@@ -53,7 +53,7 @@ function JoinMessage({
 
   return (
     <Text style={{ margin: 'auto' }} size="L400" align="Center">
-      Voice chat’s empty — Be the first to hop in!
+      Voice chat is empty. Be the first to hop in!
     </Text>
   );
 }

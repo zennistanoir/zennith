@@ -2,6 +2,8 @@
 import fs from 'fs';
 import path from 'path';
 
+// Why patch strings: Element Call is a vendored, prebuilt bundle with no extension points
+// for these hooks, and the only alternative is maintaining an Element Call fork.
 // Build-time patches to Element Call's minified bundle (@element-hq/element-call-embedded
 // 0.20.1). They hand a few view-model hooks to `window.__zennithEC`, which the host
 // installs into the iframe (src/app/plugins/call/ecBridge.ts):

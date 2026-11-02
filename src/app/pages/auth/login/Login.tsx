@@ -13,6 +13,7 @@ import { getLoginPath, getRegisterPath, withSearchParam } from '../../pathUtils'
 import { usePathWithOrigin } from '../../../hooks/usePathWithOrigin';
 import { LoginPathSearchParams } from '../../paths';
 import { useClientConfig } from '../../../hooks/useClientConfig';
+import * as authCss from '../styles.css';
 
 const getLoginTokenSearchParam = () => {
   // when using hasRouter query params in existing route
@@ -92,7 +93,10 @@ export function Login() {
         </>
       )}
       <Text align="Center">
-        Do not have an account? <Link to={getRegisterPath(server)}>Register</Link>
+        Do not have an account?{' '}
+        <Link className={authCss.TouchLink} to={getRegisterPath(server)}>
+          Register
+        </Link>
       </Text>
     </Box>
   );

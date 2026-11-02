@@ -186,6 +186,8 @@ export class CallControl extends EventEmitter implements CallControlState {
   private injectTileStyles() {
     if (!this.document) return;
 
+    // Injected as a style tag because Element Call is a vendored bundle with no extension
+    // points for tile styling (see scripts/patchElementCall.js).
     const styleId = 'zennith-call-tiles';
     if (this.document.getElementById(styleId)) return;
 

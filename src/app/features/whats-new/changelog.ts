@@ -8,6 +8,15 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '0.1.17',
+    items: [
+      'Clearer colours in the Violet and Black themes: purple and red text is easier to read on dark backgrounds, and green buttons are a shade darker so their text stands out.',
+      'The keyboard focus ring is brighter in most themes, and the voice volume slider now shows one when you tab to it.',
+      'The sign-in page has bigger tap targets, and you can pinch-zoom on phones again.',
+      'Security updates to the libraries Zennith is built on.',
+    ],
+  },
+  {
     version: '0.1.16',
     items: [
       'The voice channel menu moves to stay on screen when you open Move to channel near the bottom of the window, and a long channel list scrolls, so every option stays visible.',

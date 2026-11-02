@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web:
+    name: Web build, audit, types
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # The audit gate level is critical, not high: vite currently carries a high advisory
+      # under production dependencies. Raise it to high once vite is upgraded.
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=critical
+
+      - name: Build
+        run: npm run build
+
+      # Ratchet: the project has pre-existing type errors. The count may fall, never rise.
+      - name: Type check (error count must not exceed baseline)
+        run: |
+          BASELINE=823
+          npx tsc --noEmit -p . > tsc-output.txt || true
+          COUNT=$(grep -c "error TS" tsc-output.txt || true)
+          echo "tsc errors: $COUNT (baseline $BASELINE)"
+          if [ "$COUNT" -gt "$BASELINE" ]; then
+            echo "Type errors increased above the baseline." >&2
+            exit 1
+          fi
+
+  desktop-check:
+    name: Tauri cargo check
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: src-tauri
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      # tauri's build script requires the frontendDist folder to exist; an empty one is
+      # enough for a compile check (the real bundle is built by the web job).
+      - name: Create placeholder frontendDist
+        run: New-Item -ItemType Directory -Force ../dist | Out-Null
+
+      - name: Cargo check
+        run: cargo check --locked

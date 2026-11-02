@@ -1,4 +1,4 @@
-import { createTheme } from '@vanilla-extract/css';
+import { createTheme, createVar, fallbackVar, globalStyle } from '@vanilla-extract/css';
 import { color } from 'folds';
 
 const silverThemeData = {
@@ -53,7 +53,7 @@ const silverThemeData = {
   },
 
   Success: {
-    Main: '#017343',
+    Main: '#016F41',
     MainHover: '#01683C',
     MainActive: '#016239',
     MainLine: '#015C36',
@@ -225,12 +225,13 @@ const violetThemeData = {
     OnContainer: '#E8E6F0',
   },
 
-  // #7C3AED keeps white button text above 4.5:1.
+  // Main/Hover/Active/Line are the text-safe tokens (>= 4.5:1 on every dark surface).
+  // Solid Button and Badge fills keep the deeper brand violet (see violetSolidFills).
   Primary: {
-    Main: '#7C3AED',
-    MainHover: '#6D28D9',
-    MainActive: '#5B21B6',
-    MainLine: '#4C1D95',
+    Main: '#9A68F1',
+    MainHover: '#A274F2',
+    MainActive: '#AA7FF3',
+    MainLine: '#B18BF4',
     OnMain: '#FFFFFF',
     Container: '#2D1B69',
     ContainerHover: '#35207A',
@@ -252,6 +253,8 @@ const violetThemeData = {
     OnContainer: '#E8E6F0',
   },
 
+  // Success.Main stays #23A55A: it is the text and icon green. Solid fills are darkened
+  // for white text through violetSolidFills.
   Success: {
     Main: '#23A55A',
     MainHover: '#27B863',
@@ -279,10 +282,10 @@ const violetThemeData = {
   },
 
   Critical: {
-    Main: '#DA373C',
-    MainHover: '#E14D52',
-    MainActive: '#E66367',
-    MainLine: '#EB797D',
+    Main: '#E05559',
+    MainHover: '#E26064',
+    MainActive: '#E46B6E',
+    MainLine: '#E67579',
     OnMain: '#FFFFFF',
     Container: '#3D1113',
     ContainerHover: '#4A1517',
@@ -292,13 +295,22 @@ const violetThemeData = {
   },
 
   Other: {
-    FocusRing: 'rgba(139, 92, 246, 0.5)',
+    FocusRing: '#9A68F1',
     Shadow: 'rgba(0, 0, 0, 1)',
     Overlay: 'rgba(0, 0, 0, 0.8)',
   },
 };
 
 export const violetTheme = createTheme(color, violetThemeData);
+
+// Solid fills for Button and Badge in the Violet and Black themes. Main is the text-safe
+// colour, so a filled button would lose its brand look; these restore it.
+// Success is darkened so white button text reaches 4.5:1 (text and icons stay #23A55A).
+const violetSolidFills = {
+  Primary: { Main: '#7C3AED', MainHover: '#6D28D9', MainActive: '#5B21B6', MainLine: '#4C1D95' },
+  Critical: { Main: '#DA373C', MainHover: '#E14D52', MainActive: '#E66367', MainLine: '#EB797D' },
+  Success: { Main: '#188244', MainHover: '#167B40', MainActive: '#14753C', MainLine: '#126F38' },
+};
 
 export const butterTheme = createTheme(color, {
   ...darkThemeData,
@@ -389,7 +401,7 @@ export const midnightTheme = createTheme(color, {
     ContainerLine: '#2A528A',
     OnContainer: '#D6E4FC',
   },
-  Other: { ...darkThemeData.Other, FocusRing: 'rgba(138, 180, 248, 0.5)' },
+  Other: { ...darkThemeData.Other, FocusRing: '#8AB4F8' },
 });
 
 export const emeraldTheme = createTheme(color, {
@@ -407,7 +419,7 @@ export const emeraldTheme = createTheme(color, {
     ContainerLine: '#186B4D',
     OnContainer: '#C9F5E3',
   },
-  Other: { ...darkThemeData.Other, FocusRing: 'rgba(110, 231, 183, 0.5)' },
+  Other: { ...darkThemeData.Other, FocusRing: '#6EE7B7' },
 });
 
 export const roseTheme = createTheme(color, {
@@ -425,7 +437,7 @@ export const roseTheme = createTheme(color, {
     ContainerLine: '#8F3458',
     OnContainer: '#FBD9E5',
   },
-  Other: { ...darkThemeData.Other, FocusRing: 'rgba(244, 166, 192, 0.5)' },
+  Other: { ...darkThemeData.Other, FocusRing: '#F4A6C0' },
 });
 
 // Pure black for OLED screens, with the Zennith violet accent.
@@ -469,5 +481,79 @@ export const lavenderTheme = createTheme(color, {
     ContainerLine: '#BCA6EE',
     OnContainer: '#3B1475',
   },
-  Other: { ...silverThemeData.Other, FocusRing: 'rgba(109, 40, 217, 0.5)' },
+  Other: { ...silverThemeData.Other, FocusRing: '#6D28D9' },
+});
+
+// Solid fill colours for filled Button and Badge. A theme sets these where its Main token is
+// tuned for text rather than for a filled background; other themes fall back to Main.
+export const solidFill = {
+  Primary: {
+    Main: createVar(),
+    MainHover: createVar(),
+    MainActive: createVar(),
+    MainLine: createVar(),
+  },
+  Critical: {
+    Main: createVar(),
+    MainHover: createVar(),
+    MainActive: createVar(),
+    MainLine: createVar(),
+  },
+  Success: {
+    Main: createVar(),
+    MainHover: createVar(),
+    MainActive: createVar(),
+    MainLine: createVar(),
+  },
+};
+
+type SolidVariant = keyof typeof solidFill;
+
+const fillWithFallback = (variant: SolidVariant) => ({
+  Main: fallbackVar(solidFill[variant].Main, color[variant].Main),
+  MainHover: fallbackVar(solidFill[variant].MainHover, color[variant].MainHover),
+  MainActive: fallbackVar(solidFill[variant].MainActive, color[variant].MainActive),
+  MainLine: fallbackVar(solidFill[variant].MainLine, color[variant].MainLine),
+});
+
+// Resolved solid fill values (theme override, else the theme's Main tokens).
+export const solidFillValue = {
+  Primary: fillWithFallback('Primary'),
+  Critical: fillWithFallback('Critical'),
+  Success: fillWithFallback('Success'),
+};
+
+[violetTheme, amoledTheme].forEach((themeClass) => {
+  const vars: Record<string, string> = {};
+  (Object.keys(violetSolidFills) as SolidVariant[]).forEach((variant) => {
+    (['Main', 'MainHover', 'MainActive', 'MainLine'] as const).forEach((token) => {
+      vars[solidFill[variant][token]] = violetSolidFills[variant][token];
+    });
+  });
+  globalStyle(`.${themeClass}`, { vars });
+});
+
+// folds 2.7.2 ships no extension point for per-component colours, so the filled Button and
+// Badge classes are matched by their compiled names and given the solid fill values.
+// If a folds upgrade renames these classes the override stops matching and the buttons fall
+// back to the theme's Main colour (still readable, only less saturated).
+const foldsSolidClasses: Record<SolidVariant, { button: string; badge: string }> = {
+  Primary: { button: '.epr39zh.epr39zm', badge: '._13qe89mb._13qe89mg' },
+  Success: { button: '.epr39zj.epr39zm', badge: '._13qe89md._13qe89mg' },
+  Critical: { button: '.epr39zl.epr39zm', badge: '._13qe89mf._13qe89mg' },
+};
+
+(Object.keys(foldsSolidClasses) as SolidVariant[]).forEach((variant) => {
+  const fill = solidFillValue[variant];
+  globalStyle(foldsSolidClasses[variant].button, {
+    vars: {
+      '--epr39z0': fill.Main,
+      '--epr39z1': fill.MainHover,
+      '--epr39z2': fill.MainActive,
+      '--epr39z3': fill.MainLine,
+    },
+  });
+  globalStyle(foldsSolidClasses[variant].badge, {
+    vars: { '--_13qe89m0': fill.Main, '--_13qe89m1': fill.MainLine },
+  });
 });
