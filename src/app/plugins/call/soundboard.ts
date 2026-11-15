@@ -1,9 +1,12 @@
-import { useMemo, useSyncExternalStore } from 'react';
+import { useCallback, useMemo, useSyncExternalStore } from 'react';
 import { useAtomValue } from 'jotai';
 import { MatrixClient, Room } from 'matrix-js-sdk';
 import { StateEvent } from '../../../types/matrix/room';
 import { roomToParentsAtom } from '../../state/room/roomToParents';
 import { useStateEvent } from '../../hooks/useStateEvent';
+import { useStateEventCallback } from '../../hooks/useStateEventCallback';
+import { useForceUpdate } from '../../hooks/useForceUpdate';
+import { getAllParents } from '../../utils/room';
 import { downloadMedia, mxcUrlToHttp } from '../../utils/matrix';
 import { playIntoMic } from './noiseSuppression';
 import { getContext } from './toggleSounds';
@@ -52,21 +55,35 @@ export const parseSoundboard = (content: unknown): SoundboardSound[] => {
   return sounds.filter(isSound).slice(0, SOUNDBOARD_MAX_SOUNDS);
 };
 
-// The room whose soundboard applies to a voice room: the first parent space that
-// has one, else the first parent space, else the room itself.
+// The room whose soundboard applies to a voice room: the nearest ancestor space that
+// has one (voice rooms often sit in a sub-space), else the nearest parent space, else
+// the room itself.
 export const useSoundboardRoom = (mx: MatrixClient, room: Room): Room => {
   const roomToParents = useAtomValue(roomToParentsAtom);
-  const parents = roomToParents.get(room.roomId);
+  const [updateCount, forceUpdate] = useForceUpdate();
+
+  useStateEventCallback(
+    mx,
+    useCallback(
+      (event) => {
+        if (event.getType() === StateEvent.ZennithSoundboard) forceUpdate();
+      },
+      [forceUpdate]
+    )
+  );
 
   return useMemo(() => {
-    const spaces = [...(parents ?? [])]
+    const spaces = [...getAllParents(roomToParents, room.roomId)]
       .map((id) => mx.getRoom(id))
       .filter((r): r is Room => !!r);
     const withBoard = spaces.find(
-      (s) => parseSoundboard(s.currentState.getStateEvents(StateEvent.ZennithSoundboard, '')?.getContent()).length > 0
+      (s) =>
+        parseSoundboard(s.currentState.getStateEvents(StateEvent.ZennithSoundboard, '')?.getContent())
+          .length > 0
     );
     return withBoard ?? spaces[0] ?? room;
-  }, [mx, room, parents]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mx, room, roomToParents, updateCount]);
 };
 
 export const useSoundboard = (room: Room): SoundboardSound[] => {

@@ -8,6 +8,10 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '0.1.20',
+    items: ['Soundboard sounds now show in calls for voice rooms inside sub-spaces'],
+  },
+  {
     version: '0.1.19',
     items: [
       'Soundboard: adding a sound works again. Sounds could not be saved because the server rejected the decimal length value.',
