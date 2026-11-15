@@ -8,6 +8,13 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '0.1.19',
+    items: [
+      'Soundboard: adding a sound works again. Sounds could not be saved because the server rejected the decimal length value.',
+      'Voice channel list: hovering a member no longer shows two speaker icons at once.',
+    ],
+  },
+  {
     version: '0.1.18',
     items: [
       'Hotfix for 0.1.17: opening a space, room or message link no longer fails with "was not legal room ID or room alias".',

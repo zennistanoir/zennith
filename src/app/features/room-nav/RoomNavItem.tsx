@@ -489,6 +489,7 @@ function CallMemberSubItem({
             <Icon
               size="50"
               src={volume === 0 ? Icons.VolumeMute : Icons.VolumeHigh}
+              className="zennith-voice-vol-indicator"
               style={{ opacity: config.opacity.P300, flexShrink: 0 }}
               aria-label={volume === 0 ? 'Muted by you' : `Volume ${Math.round(volume * 100)}%`}
             />

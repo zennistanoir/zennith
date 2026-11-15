@@ -28,7 +28,7 @@ export type SoundboardSound = {
   url: string;
   mimetype?: string;
   size?: number;
-  duration?: number;
+  durationMs?: number;
 };
 
 export type SoundboardContent = {

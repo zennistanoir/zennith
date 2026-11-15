@@ -96,7 +96,7 @@ function AddSoundTile({ roomId, sounds }: AddSoundTileProps) {
           url,
           mimetype: picked.file.type || undefined,
           size: picked.file.size,
-          duration: Math.round(picked.duration * 100) / 100,
+          durationMs: Math.round(picked.duration * 1000),
         };
         await saveSoundboard(mx, roomId, [...sounds, sound]);
       },
@@ -291,7 +291,7 @@ function SoundTile({ sound, canEdit, onRename, onDelete }: SoundTileProps) {
           failed ? (
             <span style={{ color: color.Critical.Main }}>{failed}</span>
           ) : (
-            sound.duration !== undefined && `${sound.duration.toFixed(1)} s`
+            sound.durationMs !== undefined && `${(sound.durationMs / 1000).toFixed(1)} s`
           )
         }
         after={

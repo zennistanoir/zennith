@@ -300,3 +300,11 @@ globalStyle('.zennith-voice-username', {
   overflow: 'hidden !important',
   textOverflow: 'ellipsis !important',
 });
+
+// The hover volume button takes this indicator's place, so only one speaker icon shows.
+globalStyle(
+  '.zennith-voice-user-item:hover .zennith-voice-vol-indicator, .zennith-voice-user-item:focus-within .zennith-voice-vol-indicator',
+  {
+    display: 'none',
+  }
+);
