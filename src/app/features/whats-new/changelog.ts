@@ -8,130 +8,16 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
-    version: '0.1.22',
-    items: ['Room settings: moderators can auto-delete messages after 1, 7, 14 or 30 days.'],
-  },
-  {
-    version: '0.1.21',
+    version: '1.0.0',
     items: [
-      'Voice channel menu: if you disconnect someone whose PC is off, a Remove from call button now clears them from the call.',
+      'Zennith 1.0: the first official release. Chat, voice channels, screen sharing and a soundboard, on the web and as a desktop app.',
+      'Voice channels: muted and deafened icons, a per-person volume slider, and a call panel with camera, screen share, soundboard and noise suppression.',
+      'Moderators can disconnect or move people between voice channels, and a Remove from call button clears someone whose PC is off.',
+      'Soundboard: sounds can be added again and show in calls for voice rooms inside sub-spaces. Moderators add them in Space Settings → Soundboard.',
+      'The voice channel list shows one speaker icon per person, not two.',
       'Settings > Account: you can now change your password.',
-    ],
-  },
-  {
-    version: '0.1.20',
-    items: ['Soundboard sounds now show in calls for voice rooms inside sub-spaces'],
-  },
-  {
-    version: '0.1.19',
-    items: [
-      'Soundboard: adding a sound works again. Sounds could not be saved because the server rejected the decimal length value.',
-      'Voice channel list: hovering a member no longer shows two speaker icons at once.',
-    ],
-  },
-  {
-    version: '0.1.18',
-    items: [
-      'Hotfix for 0.1.17: opening a space, room or message link no longer fails with "was not legal room ID or room alias".',
-    ],
-  },
-  {
-    version: '0.1.17',
-    items: [
-      'Clearer colours in the Violet and Black themes: purple and red text is easier to read on dark backgrounds, and green buttons are a shade darker so their text stands out.',
-      'The keyboard focus ring is brighter in most themes, and the voice volume slider now shows one when you tab to it.',
-      'The sign-in page has bigger tap targets, and you can pinch-zoom on phones again.',
-      'Security updates to the libraries Zennith is built on.',
-    ],
-  },
-  {
-    version: '0.1.16',
-    items: [
-      'The voice channel menu moves to stay on screen when you open Move to channel near the bottom of the window, and a long channel list scrolls, so every option stays visible.',
-    ],
-  },
-  {
-    version: '0.1.15',
-    items: [
-      'Disconnect and Move from the voice channel menu now work even when someone’s PC clock is a little off.',
-      'Move to channel now lists voice channels inside categories too.',
-      'After you disconnect or move someone, the menu waits until they’ve actually left, and tells you if they haven’t.',
-    ],
-  },
-  {
-    version: '0.1.14',
-    items: [
-      'The menu you get by right-clicking someone in a voice channel now closes when you click away or press Esc.',
-      'Moderators can disconnect the Zennify music bot or move it to another voice channel from that menu.',
-      'Move to channel is always in the menu for moderators, and greyed out when there is no other voice channel.',
-      'Clicking a different voice channel while you are in a call asks before switching, so a stray click no longer moves you.',
-      'The per-person volume slider has a new look that matches your theme.',
-    ],
-  },
-  {
-    version: '0.1.13',
-    items: [
-      'Press Ctrl + / anywhere to see every keyboard shortcut, with a quick link from Settings → Keybinds.',
-      'Move between rooms without the mouse: Alt + ↑/↓ to step through, Alt + Shift + ↑/↓ to jump to unread, Esc to mark the current room read, Shift + Esc to clear every unread.',
-      'Right-click the Inbox icon in the sidebar for Mark All as Read, and there is a matching button next to the Inbox header.',
-      'Do Not Disturb now silences notification sounds and desktop popups while it is on, not only in the status badge.',
-    ],
-  },
-  {
-    version: '0.1.12',
-    items: [
-      'While you’re in a voice channel, the panel above your profile has camera, screen share, soundboard and noise suppression buttons.',
-      'Your status now sticks: pick Online, Idle, Do Not Disturb or Invisible from your avatar. Do Not Disturb shows a red dot, and your pick carries over to Zennith on your other devices.',
-      'Desktop app: links open in your web browser when you click them.',
-    ],
-  },
-  {
-    version: '0.1.11',
-    items: [
-      'Fixed a crash when opening the soundboard in a space with no sounds, or while every sound was unavailable.',
-    ],
-  },
-  {
-    version: '0.1.10',
-    items: [
-      'Voice channels show a muted or deafened icon next to people, in the room list and on their call tile.',
-      'Desktop app: the “sharing a window” bar no longer pops up at the bottom of the screen when you share.',
-      'Desktop app: window shares show only what the app displays, without its title bar or border.',
-      'Desktop app: the red notification dot on the taskbar icon is smaller.',
-    ],
-  },
-  {
-    version: '0.1.9',
-    items: [
-      'Soundboard: play short sounds into the call from the call controls. Moderators add them in Space Settings → Soundboard.',
-      'Switch voice channels without hanging up first: just click another one.',
-      'Moderators can right-click someone in a voice channel to disconnect them or move them to another channel.',
-      'New Accessibility page in Settings: reduced motion, high contrast, focus rings, text size, line spacing, a readable font, paused GIFs and visual call cues.',
-      'Your own speaking ring lights up as soon as you talk, and everyone else’s reacts faster.',
-      'About page credits that Zennith was forked and developed with the help of AI.',
-    ],
-  },
-  {
-    version: '0.1.8',
-    items: [
-      "Message drafts are kept per room, so a half-written message is still there when you come back.",
-      'Room list shows unread counts, mentions, typing and muted icons again, plus DM avatars.',
-      'Hover a voice channel member to get a volume button (right-click still works).',
-      'Violet theme has a deeper accent and clearer contrast between panels.',
-      'Hang up and Reject buttons are red, and call controls work better with screen readers.',
-      'Animations are reduced when your system asks for reduced motion.',
-    ],
-  },
-  {
-    version: '0.1.7',
-    items: [
-      'Mic test in Settings → Voice & Video, with a level meter that shows where Voice Gate opens.',
-      'Test button next to Output Device, to check which speakers or headset you picked.',
-      "Push to talk keeps your mic open for a moment after you let go, so your last word isn't cut off.",
-      'Search box in Settings to jump straight to any option.',
-      'When a new version is ready, choose to update now or wait until you next open Zennith.',
-      'Call sounds play on the output device you picked, not always the system default.',
-      'zennandfriends.com is in the homeserver list on the login screen.',
+      'Room settings: moderators can auto-delete messages after 1, 7, 14 or 30 days.',
+      'Keyboard shortcuts (press Ctrl + / to see them), per-room message drafts, an Accessibility page and a settings search.',
     ],
   },
 ];
