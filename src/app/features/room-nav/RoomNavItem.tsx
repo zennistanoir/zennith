@@ -85,6 +85,7 @@ import {
   CallMemberDevice,
   CallModerationContent,
   canModerateCall,
+  forceRemoveFromCall,
   getMoveTargets,
   isCallBot,
   sendBotCallModeration,
@@ -162,7 +163,14 @@ function CallMemberModeration({
       [mx, isBot, userId, memberDevices]
     )
   );
-  const busy = sendState.status === AsyncStatus.Loading;
+  const [removeState, removeFromCall] = useAsyncCallback(
+    useCallback(
+      () => forceRemoveFromCall(mx, room, userId, memberDevices),
+      [mx, room, userId, memberDevices]
+    )
+  );
+  const busy =
+    sendState.status === AsyncStatus.Loading || removeState.status === AsyncStatus.Loading;
 
   // Once sent, stay open until the member actually leaves the call (this row
   // then unmounts), so a command their client ignores doesn't look like success.
@@ -239,13 +247,33 @@ function CallMemberModeration({
           ))}
         </Box>
       )}
+      {waiting && stillConnected && !isBot && (
+        <MenuItem
+          size="300"
+          radii="300"
+          variant="Critical"
+          fill="None"
+          disabled={busy || removeState.status === AsyncStatus.Success}
+          before={<Icon size="100" src={Icons.Delete} />}
+          onClick={removeFromCall}
+        >
+          <Text size="T300">Remove from call</Text>
+        </MenuItem>
+      )}
       <Box style={{ padding: `0 ${config.space.S200}` }}>
         <Text size="T200" priority="300">
           {busy && 'Sending...'}
           {sendState.status === AsyncStatus.Error && "Couldn't send. Try again."}
+          {removeState.status === AsyncStatus.Error &&
+            `Couldn't remove them: ${
+              removeState.error instanceof Error ? removeState.error.message : 'unknown error'
+            }`}
+          {removeState.status === AsyncStatus.Success &&
+            'Removed. If they come back, their app rejoined.'}
           {waiting &&
+            removeState.status !== AsyncStatus.Success &&
             (stillConnected
-              ? "They're still connected. Their Zennith may need updating."
+              ? "They're still connected. If their PC is off, use Remove from call."
               : 'Waiting for them to leave...')}
           {!busy &&
             !waiting &&

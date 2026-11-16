@@ -24,9 +24,15 @@ import { StateEvent } from '../../../types/matrix/room';
 // Stale commands (e.g. delivered after the member rejoined) are rejected by
 // naming the call memberships being ended, not by comparing the two PCs'
 // clocks: a PC clock a couple of minutes off made every command look stale.
+//
+// Fallback for members whose client is offline (PC switched off, app killed): no
+// client is left to obey the command, so their call membership would only vanish
+// when it expires (hours later). forceRemoveFromCall overwrites their membership
+// state events with empty content from the moderator's side. A client that is
+// still running will notice and may rejoin on its own; this is meant for members
+// who are really gone.
 
 export const CALL_MODERATION_EVENT = 'zennith.call.control';
-
 // Commands from older clients (no memberships) older than this are ignored.
 const MAX_AGE_MS = 60_000;
 
@@ -42,6 +48,43 @@ export type CallModerationContent = {
 };
 
 export type CallMemberDevice = { deviceId: string; createdTs: number };
+
+const CALL_MEMBER_EVENT = 'org.matrix.msc3401.call.member';
+
+// Clears the member's call membership events in the call room. The state keys
+// come from the room's real membership events (matched by device), never built
+// by hand.
+export const forceRemoveFromCall = async (
+  mx: MatrixClient,
+  room: Room,
+  userId: string,
+  memberDevices: CallMemberDevice[]
+) => {
+  const deviceIds = new Set(memberDevices.map((d) => d.deviceId));
+  const events = room.currentState.getStateEvents(CALL_MEMBER_EVENT).filter((ev) => {
+    const key = ev.getStateKey();
+    if (!key) return false;
+    const deviceId = (ev.getContent() as { device_id?: unknown }).device_id;
+    return (
+      typeof deviceId === 'string' &&
+      deviceIds.has(deviceId) &&
+      (ev.getSender() === userId || key.includes(userId))
+    );
+  });
+  if (events.length === 0) throw new Error('Their call entry was not found.');
+  await Promise.all(
+    events.map((ev) =>
+      mx.sendStateEvent(
+        room.roomId,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        CALL_MEMBER_EVENT as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+        ev.getStateKey() as string
+      )
+    )
+  );
+};
 
 // Same rule as kicking: the kick power level, and strictly more power than the target.
 export const canModerateCall = (

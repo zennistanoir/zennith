@@ -8,6 +8,13 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '0.1.21',
+    items: [
+      'Voice channel menu: if you disconnect someone whose PC is off, a Remove from call button now clears them from the call.',
+      'Settings > Account: you can now change your password.',
+    ],
+  },
+  {
     version: '0.1.20',
     items: ['Soundboard sounds now show in calls for voice rooms inside sub-spaces'],
   },
