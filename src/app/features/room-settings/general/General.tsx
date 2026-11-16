@@ -11,6 +11,7 @@ import {
   RoomLocalAddresses,
   RoomPublishedAddresses,
   RoomPublish,
+  RoomRetention,
   RoomUpgrade,
 } from '../../common-settings/general';
 import { useRoomCreators } from '../../../hooks/useRoomCreators';
@@ -52,6 +53,7 @@ export function General({ requestClose }: GeneralProps) {
                 <RoomHistoryVisibility permissions={permissions} />
                 <RoomEncryption permissions={permissions} />
                 <RoomPublish permissions={permissions} />
+                <RoomRetention permissions={permissions} />
               </Box>
               <Box direction="Column" gap="100">
                 <Text size="L400">Addresses</Text>

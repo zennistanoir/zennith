@@ -8,6 +8,10 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: '0.1.22',
+    items: ['Room settings: moderators can auto-delete messages after 1, 7, 14 or 30 days.'],
+  },
+  {
     version: '0.1.21',
     items: [
       'Voice channel menu: if you disconnect someone whose PC is off, a Remove from call button now clears them from the call.',
